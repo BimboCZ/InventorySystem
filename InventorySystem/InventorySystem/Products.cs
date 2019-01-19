@@ -39,12 +39,20 @@ namespace InventorySystem
             {
                 status = false;
             }
-            SqlCommand cmd = new SqlCommand(@"INSERT INTO [dbo].[Products]
-           ([ProductCode]
-           ,[ProductName]
-           ,[ProductStatus])
-     VALUES
-           ('" + textBox1.Text + "','" + textBox2.Text + "','" + status + "');", con);
+
+            var sqlQuery = "";
+            if (IfProductExists(con, textBox1.Text))
+            {
+                sqlQuery = @"UPDATE [Products] SET [ProductName] = '" + textBox2.Text + "',[ProductStatus] = '" + status +
+                          "' WHERE [ProductCode] = '" + textBox1.Text + "'";
+            }
+            else
+            {
+                sqlQuery = @"INSERT INTO [dbo].[Products] ([ProductCode] ,[ProductName] ,[ProductStatus])
+                             VALUES ('" + textBox1.Text + "','" + textBox2.Text + "','" + status + "');";
+            }
+
+            SqlCommand cmd = new SqlCommand(sqlQuery, con);
             cmd.ExecuteNonQuery();
             con.Close();
 
@@ -52,6 +60,19 @@ namespace InventorySystem
             LoadData();
         }
 
+        private bool IfProductExists(SqlConnection Connection, string ProductCode)
+        {
+            SqlDataAdapter sda = new SqlDataAdapter("select 1 from [Products] WHERE [ProductCode]='" + ProductCode + "'", Connection);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            if (dt.Rows.Count > 0)
+            {
+                return true;
+            }else
+            {
+                return false;
+            }
+        }
 
         public void LoadData()
         {
@@ -71,12 +92,34 @@ namespace InventorySystem
                 }
                 else
                 {
-                    dataGridView1.Rows[n].Cells[2].Value = "Deactive";
+                    dataGridView1.Rows[n].Cells[2].Value = "Inactive";
                 }
             }
         }
 
-        private void dataGridView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=InventorySystem;Integrated Security=True");
+            var sqlQuery = "";
+            if (IfProductExists(con, textBox1.Text))
+            {
+                con.Open();
+                sqlQuery = @"DELETE FROM [Products] WHERE [ProductCode] = '" + textBox1.Text + "'";
+
+                SqlCommand cmd = new SqlCommand(sqlQuery, con);
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+            else
+            {
+                MessageBox.Show("Record Not Exist...!!");
+            }
+
+            //Reading Data
+            LoadData();
+        }
+
+        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
         {
             textBox1.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
             textBox2.Text = dataGridView1.SelectedRows[0].Cells[1].Value.ToString();

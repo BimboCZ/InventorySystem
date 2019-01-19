@@ -28,7 +28,7 @@ namespace InventorySystem
         private void Login_Button(object sender, EventArgs e)
         {
             //TODO Check if valid login
-            SqlConnection con = new SqlConnection("Data Source=.;Initial Catalog=InventorySystem;Integrated Security=True");
+            SqlConnection con = new SqlConnection("Data Source=webdev.spsejecna.cz,11433;Initial Catalog=pv_dinh;User ID=dinh;Password=pvDinh2019");
             SqlDataAdapter sda = new SqlDataAdapter(@"SELECT *
                 FROM[dbo].[Login] Where UserName = '" + textBox1.Text + "' and Password = '" + textBox2.Text + "'", con);
             DataTable dt = new DataTable();
