@@ -68,7 +68,8 @@ namespace InventorySystem
             if (dt.Rows.Count > 0)
             {
                 return true;
-            }else
+            }
+            else
             {
                 return false;
             }
