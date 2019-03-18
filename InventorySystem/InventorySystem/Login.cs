@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
@@ -27,8 +28,8 @@ namespace InventorySystem
 
         private void Login_Button(object sender, EventArgs e)
         {
-            //TODO Check if valid login
-            SqlConnection con = new SqlConnection("Data Source=webdev.spsejecna.cz,11433;Initial Catalog=pv_dinh;User ID=dinh;Password=pvDinh2019");
+            SqlConnection con = Connection.GetConnection("WebDev");
+            // pozadat ucitele o opravu
             SqlDataAdapter sda = new SqlDataAdapter(@"SELECT *
                 FROM[dbo].[Login] Where UserName = '" + textBox1.Text + "' and Password = '" + textBox2.Text + "'", con);
             DataTable dt = new DataTable();

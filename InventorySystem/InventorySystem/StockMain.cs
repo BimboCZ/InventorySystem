@@ -12,6 +12,8 @@ namespace InventorySystem
 {
     public partial class StockMain : Form
     {
+        bool close = true;
+
         public StockMain()
         {
             InitializeComponent();
@@ -21,12 +23,25 @@ namespace InventorySystem
         {
             Products pro = new Products();
             pro.MdiParent = this;
+            pro.StartPosition = FormStartPosition.CenterScreen;
             pro.Show();
         }
 
         private void StockMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            if (close)
+            {
+                DialogResult result = MessageBox.Show("Do you want to exit ?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    close = false;
+                    Application.Exit();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }
