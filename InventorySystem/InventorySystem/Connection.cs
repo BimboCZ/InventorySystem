@@ -12,8 +12,10 @@ namespace InventorySystem
     {
         public static SqlConnection GetConnection(string AppConfigName)
         {
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = ConfigurationManager.ConnectionStrings[AppConfigName].ConnectionString;
+            SqlConnection con = new SqlConnection
+            {
+                ConnectionString = ConfigurationManager.ConnectionStrings[AppConfigName].ConnectionString
+            };
             return con;
         }
     }

@@ -13,13 +13,9 @@ namespace InventorySystem
     {
         public static string GetProduct(Int32 id)
         {
-
             SqlConnection con = Connection.GetConnection("WebDev");
             con.Open();
-
-            //Příkaz
-            SqlCommand command;
-            command = new SqlCommand("SELECT ProductName FROM products WHERE id=@id", con);
+            SqlCommand command = new SqlCommand("SELECT ProductName FROM products WHERE id=@id", con);
 
             //Přidání parametru přes hodnotu
             command.Parameters.AddWithValue("@id", id);
@@ -30,7 +26,6 @@ namespace InventorySystem
 
             //Vyvolání příkazu
             string returnValue = Convert.ToString(command.ExecuteScalar());
-
             return returnValue;
         }
 
@@ -43,26 +38,16 @@ namespace InventorySystem
             {
                 SqlConnection con = Connection.GetConnection("WebDev");
                 con.Open();
-
-                //Vytvořím si data adapter
                 SqlDataAdapter da = new SqlDataAdapter();
-
-                //Přidám příkaz select do data adaptéru
-                SqlCommand prikazSelect;
-                prikazSelect = new SqlCommand("SELECT ProductCode,ProductName,ProductStatus FROM products", con);
-
-                da.SelectCommand = prikazSelect;
-
-                //Pomocí data adapteru  naplníme lokální tabulku
+                SqlCommand comSelect = new SqlCommand("SELECT ProductCode,ProductName,ProductStatus FROM products", con);
+                da.SelectCommand = comSelect;
                 da.Fill(localTable);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
             return localTable;
-
         }
     }
 }

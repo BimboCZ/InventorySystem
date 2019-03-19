@@ -26,7 +26,7 @@ namespace InventorySystem
             LoadData();
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void Button2_Click(object sender, EventArgs e)
         {
             if (Validation())
             {
@@ -82,7 +82,7 @@ namespace InventorySystem
             dataGridView1.DataSource = dt;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this column ?", "Message", MessageBoxButtons.YesNo);
             if (DialogResult == DialogResult.Yes)
@@ -112,7 +112,7 @@ namespace InventorySystem
             }
         }
 
-        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
+        private void DataGridView1_MouseClick(object sender, MouseEventArgs e)
         {
             button2.Text = "Update";
             textBox1.Text = dataGridView1.SelectedRows[0].Cells[0].Value.ToString();
@@ -136,7 +136,7 @@ namespace InventorySystem
             textBox1.Focus();
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void Button3_Click(object sender, EventArgs e)
         {
             ResetRecords();
         }
