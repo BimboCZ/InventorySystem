@@ -33,29 +33,29 @@ namespace InventorySystem
                 SqlConnection con = Connection.GetConnection("WebDev");
                 // Insert Logic
                 con.Open();
-                bool status = false;
-                if (comboBox1.SelectedIndex == 0)
-                {
-                    status = true;
-                }
-                else
-                {
-                    status = false;
-                }
+                //bool status = false;
+                //if (comboBox1.SelectedIndex == 0)
+                //{
+                //    status = true;
+                //}
+                //else
+                //{
+                //    status = false;
+                //}
 
-                var sqlQuery = "";
-                if (IfProductExists(con, textBox1.Text))
-                {
-                    sqlQuery = @"UPDATE [Products] SET [ProductName] = '" + textBox2.Text + "',[ProductStatus] = '" + status +
-                              "' WHERE [ProductCode] = '" + textBox1.Text + "'";
-                }
-                else
-                {
-                    sqlQuery = @"INSERT INTO [dbo].[Products] ([ProductCode] ,[ProductName] ,[ProductStatus])
-                             VALUES ('" + textBox1.Text + "','" + textBox2.Text + "','" + status + "');";
-                }
+                //var sqlQuery = "";
+                //if (ProductManager.IfProductExists(con, textBox1.Text))
+                //{
+                //    sqlQuery = @"UPDATE [Products] SET [ProductName] = '" + textBox2.Text + "',[ProductStatus] = '" + status +
+                //              "' WHERE [ProductCode] = '" + textBox1.Text + "'";
+                //}
+                //else
+                //{
+                //    sqlQuery = @"INSERT INTO [dbo].[Products] ([ProductCode] ,[ProductName] ,[ProductStatus])
+                //             VALUES ('" + textBox1.Text + "','" + textBox2.Text + "','" + status + "');";
+                //}
 
-                SqlCommand cmd = new SqlCommand(sqlQuery, con);
+                SqlCommand cmd = new SqlCommand(ProductManager.InsertAddProduct(ProductManager.IfProductExists(con, textBox1.Text)), con);
                 cmd.ExecuteNonQuery();
                 con.Close();
 
@@ -63,14 +63,6 @@ namespace InventorySystem
                 LoadData();
                 ResetRecords();
             }
-        }
-
-        private bool IfProductExists(SqlConnection Connection, string ProductCode)
-        {
-            SqlDataAdapter sda = new SqlDataAdapter("select 1 from [Products] WHERE [ProductCode]='" + ProductCode + "'", Connection);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            return dt.Rows.Count > 0;
         }
 
         public void LoadData()
@@ -85,13 +77,13 @@ namespace InventorySystem
         private void Button1_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this column ?", "Message", MessageBoxButtons.YesNo);
-            if (DialogResult == DialogResult.Yes)
+            if (dialogResult == DialogResult.Yes)
             {
                 if (Validation())
                 {
                     SqlConnection con = Connection.GetConnection("WebDev");
                     var sqlQuery = "";
-                    if (IfProductExists(con, textBox1.Text))
+                    if (ProductManager.IfProductExists(con, textBox1.Text))
                     {
                         con.Open();
                         sqlQuery = @"DELETE FROM [Products] WHERE [ProductCode] = '" + textBox1.Text + "'";
