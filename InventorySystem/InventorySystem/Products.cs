@@ -85,7 +85,7 @@ namespace InventorySystem
         private void button1_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Are you sure you want to delete this column ?", "Message", MessageBoxButtons.YesNo);
-            if (DialogResult == DialogResult.Yes)
+            if (dialogResult == DialogResult.Yes)
             {
                 if (Validation())
                 {
