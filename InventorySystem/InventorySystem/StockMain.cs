@@ -19,11 +19,13 @@ namespace InventorySystem
             InitializeComponent();
         }
 
-        private void productsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ProductsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Products pro = new Products();
-            pro.MdiParent = this;
-            pro.StartPosition = FormStartPosition.CenterScreen;
+            Products pro = new Products
+            {
+                MdiParent = this,
+                StartPosition = FormStartPosition.CenterScreen
+            };
             pro.Show();
         }
 
