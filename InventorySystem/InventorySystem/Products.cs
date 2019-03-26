@@ -31,31 +31,22 @@ namespace InventorySystem
             if (Validation())
             {
                 SqlConnection con = Connection.GetConnection("WebDev");
+               
+
                 // Insert Logic
                 con.Open();
-                //bool status = false;
-                //if (comboBox1.SelectedIndex == 0)
-                //{
-                //    status = true;
-                //}
-                //else
-                //{
-                //    status = false;
-                //}
 
-                //var sqlQuery = "";
-                //if (ProductManager.IfProductExists(con, textBox1.Text))
-                //{
-                //    sqlQuery = @"UPDATE [Products] SET [ProductName] = '" + textBox2.Text + "',[ProductStatus] = '" + status +
-                //              "' WHERE [ProductCode] = '" + textBox1.Text + "'";
-                //}
-                //else
-                //{
-                //    sqlQuery = @"INSERT INTO [dbo].[Products] ([ProductCode] ,[ProductName] ,[ProductStatus])
-                //             VALUES ('" + textBox1.Text + "','" + textBox2.Text + "','" + status + "');";
-                //}
+                /*POOR CODE*/
+                //ProductManager.InsertOrDelete(con, isActive, textBox1.Text, textBox2.Text);
 
-                SqlCommand cmd = new SqlCommand(ProductManager.InsertAddProduct(ProductManager.IfProductExists(con, textBox1.Text)), con);
+                bool isActive = comboBox1.SelectedIndex == 0;
+                string com = ProductManager.InsertAddProduct(ProductManager.IfProductExists(con, textBox1.Text),
+                    textBox1.Text,
+                    textBox2.Text,
+                    ProductManager.ProductStatus(isActive));
+
+                SqlCommand cmd = new SqlCommand(com, con);
+
                 cmd.ExecuteNonQuery();
                 con.Close();
 
@@ -64,6 +55,8 @@ namespace InventorySystem
                 ResetRecords();
             }
         }
+
+
 
         public void LoadData()
         {
