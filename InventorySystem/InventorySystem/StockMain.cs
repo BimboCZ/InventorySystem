@@ -45,5 +45,13 @@ namespace InventorySystem
                 }
             }
         }
-    }
+
+  private void StockToolStripMenuItem_Click(object sender, EventArgs e)
+  {
+   Stock stk = new Stock();
+   stk.MdiParent = this;
+   stk.StartPosition = FormStartPosition.CenterScreen;
+   stk.Show();
+  }
+ }
 }

@@ -44,7 +44,7 @@ namespace InventorySystem
     ResetRecords();
    }
   }
-  
+
 
   public void LoadData()
   {

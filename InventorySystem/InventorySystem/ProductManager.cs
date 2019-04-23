@@ -54,13 +54,12 @@ namespace InventorySystem
 
   public static void InsertUpdate(SqlConnection con, string ProductCode, string ProductName, bool isActive, bool isUpdate)
   {
-   
+
    var sqlQuery = "";
    SqlCommand com = new SqlCommand(sqlQuery, con);
    if (isUpdate)
    {
-    com.CommandText = sqlQuery = @"UPDATE [Products] SET [ProductName] = @ProductName,[ProductStatus] = @Status WHERE [ProductCode] = @ProductCode;
-Select 'ahoj' as scalar";
+    com.CommandText = sqlQuery = @"UPDATE [Products] SET [ProductName] = @ProductName,[ProductStatus] = @Status WHERE [ProductCode] = @ProductCode";
 
     com.Parameters.Add("@ProductCode", SqlDbType.Int);
     com.Parameters["@ProductCode"].Value = ProductCode;
